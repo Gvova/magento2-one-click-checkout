@@ -3,15 +3,6 @@
     <preference for="Pmclain\OneClickCheckout\Api\ButtonInterface" type="Pmclain\OneClickCheckout\Model\Button" />
     <preference for="Pmclain\OneClickCheckout\Api\DefaultPaymentRepositoryInterface" type="Pmclain\OneClickCheckout\Model\DefaultPaymentRepository" />
     <preference for="Pmclain\OneClickCheckout\Api\Data\DefaultPaymentInterface" type="Pmclain\OneClickCheckout\Model\DefaultPayment" />
-    <type name="Pmclain\OneClickCheckout\Model\VaultPool">
-        <arguments>
-            <argument name="vaultSourceMap" xsi:type="array">
-                <item name="braintree" xsi:type="object">Pmclain\OneClickCheckout\Model\VaultSource\Braintree</item>
-                <item name="pmclain_authorizenetcim" xsi:type="object">Pmclain\OneClickCheckout\Model\VaultSource\PmclainAuthorizenetCim</item>
-                <item name="pmclain_stripe" xsi:type="object">Pmclain\OneClickCheckout\Model\VaultSource\PmclainStripe</item>
-            </argument>
-        </arguments>
-    </type>
     <type name="Magento\Vault\Block\TokenRendererInterface">
         <plugin name="pmclain_occ_cardrenderer" type="Pmclain\OneClickCheckout\Plugin\TokenRendererInterface" sortOrder="10" />
     </type>

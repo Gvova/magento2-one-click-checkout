@@ -3,7 +3,6 @@
 namespace Pmclain\OneClickCheckout\Model\QuoteBuilder;
 
 use Pmclain\OneClickCheckout\Model\DefaultPaymentProvider;
-use Pmclain\OneClickCheckout\Model\VaultPool;
 
 class PaymentBuilder
 {
@@ -13,21 +12,14 @@ class PaymentBuilder
     protected $defaultPaymentProvider;
 
     /**
-     * @var VaultPool
-     */
-    protected $vaultPool;
-
-    /**
      * PaymentBuilder constructor.
      * @param DefaultPaymentProvider $defaultPaymentProvider
      * @param VaultPool $vaultPool
      */
     public function __construct(
-        DefaultPaymentProvider $defaultPaymentProvider,
-        VaultPool $vaultPool
+        DefaultPaymentProvider $defaultPaymentProvider
     ) {
         $this->defaultPaymentProvider = $defaultPaymentProvider;
-        $this->vaultPool = $vaultPool;
     }
 
     /**
@@ -36,17 +28,9 @@ class PaymentBuilder
     public function setPaymentMethod($quote)
     {
         $token = $this->defaultPaymentProvider->getDefaultPayment();
+        $quote->getBillingAddress()->setPaymentMethod('checkmo');
 
-        $payment = $quote->getPayment();
-
-        $payment->setQuote($quote);
-
-        $payment->importData($this->vaultPool->getPaymentDataArray($token));
-
-        if ($quote->isVirtual()) {
-            $quote->getBillingAddress()->setPaymentMethod($payment->getMethod());
-        } else {
-            $quote->getShippingAddress()->setPaymentMethod($payment->getMethod());
+        if (!$quote->isVirtual()) {
             $quote->getShippingAddress()->setCollectShippingRates(true);
         }
     }
